@@ -26,7 +26,7 @@ const HomePage: NextPage = () => {
       handleNotificationClick();
     }, 10 * 1000); // 10 segundos
 
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, []);
   return (
     <div>
