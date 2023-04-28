@@ -13,6 +13,7 @@ const PermissaoPage: NextPage = () => {
 
   useEffect(() => {
     if (typeof window !== "undefined" && Notification.permission) {
+      console.log(Notification.permission);
       setPermission(Notification.permission);
     }
   }, []);
@@ -34,6 +35,8 @@ const PermissaoPage: NextPage = () => {
       ) : (
         <button onClick={requestPermission}>Permitir Notificações</button>
       )}
+      <br />
+      permissão de notificação: {permission}
     </div>
   );
 };
