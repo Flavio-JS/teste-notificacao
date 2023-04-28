@@ -1,37 +1,73 @@
 import { NextPage } from "next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-const HomePage: NextPage = () => {
+const PermissaoPage: NextPage = () => {
+  const [permission, setPermission] = useState<
+    "default" | "denied" | "granted"
+  >("default");
+
+  const requestPermission = async () => {
+    const result = await Notification.requestPermission();
+    setPermission(result);
+  };
+
   useEffect(() => {
-    const requestPermission = async () => {
-      const permission = await Notification.requestPermission();
-      console.log("Permissão de notificação:", permission);
-    };
-    requestPermission();
+    if (typeof window !== "undefined" && Notification.permission) {
+      setPermission(Notification.permission);
+    }
   }, []);
 
   const handleNotificationClick = () => {
     const notification = new Notification("Exemplo de Notificação", {
-      body: "VAI LÁ VER O PORTAL SEU PILANTRINHA",
+      body: "Essa é uma notificação de exemplo.",
     });
     notification.onclick = (event) => {
       event.preventDefault();
-      window.open("https://teste-notificacao-mwxgov3qo-flavio-js.vercel.app/");
+      window.open("https://www.seusite.com.br");
     };
   };
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleNotificationClick();
-    }, 10 * 1000); // 10 segundos
-
-    // return () => clearInterval(interval);
-  }, []);
   return (
     <div>
-      <p>PÁGINA EXEMPLO</p>
+      {permission === "granted" ? (
+        <button onClick={handleNotificationClick}>Enviar Notificação</button>
+      ) : (
+        <button onClick={requestPermission}>Permitir Notificações</button>
+      )}
     </div>
   );
 };
 
-export default HomePage;
+export default PermissaoPage;
+
+// import { NextPage } from "next";
+// import { useEffect } from "react";
+
+// const PermissaoPage: NextPage = () => {
+//   const requestPermission = async () => {
+//     await Notification.requestPermission();
+//   };
+
+//   useEffect(() => {
+//     requestPermission();
+//   }, []);
+
+//   const handleNotificationClick = () => {
+//     const notification = new Notification("Exemplo de Notificação", {
+//       body: "Essa é uma notificação de exemplo.",
+//     });
+//     notification.onclick = (event) => {
+//       event.preventDefault();
+//       window.open("https://www.seusite.com.br");
+//     };
+//   };
+
+//   return (
+//     <div>
+//       <button onClick={requestPermission}>Permitir Notificações</button>
+//       <button onClick={handleNotificationClick}>Enviar Notificação</button>
+//     </div>
+//   );
+// };
+
+// export default PermissaoPage;
