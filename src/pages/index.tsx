@@ -12,12 +12,11 @@ const HomePage: NextPage = () => {
 
   const handleNotificationClick = () => {
     const notification = new Notification("Exemplo de Notificação", {
-      body: "Essa é uma notificação de exemplo.",
-      icon: "/path/to/icon.png",
+      body: "VAI LÁ VER O PORTAL SEU PILANTRINHA",
     });
     notification.onclick = (event) => {
       event.preventDefault();
-      window.open("https://www.seusite.com.br");
+      window.open("https://teste-notificacao-mwxgov3qo-flavio-js.vercel.app/");
     };
   };
 
